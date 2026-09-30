@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>P&amp;C Insurance Study Guide</title>
+<style>
+  :root{
+    --bg:#f5f5f7;
+    --bg-elevated:#ffffff;
+    --bg-inset:#f0f0f2;
+    --text:#1d1d1f;
+    --text-secondary:#6e6e73;
+    --border:rgba(0,0,0,0.08);
+    --accent:#0071e3;
+    --shadow:0 1px 2px rgba(0,0,0,0.04), 0 10px 30px rgba(0,0,0,0.06);
+    --shadow-sm:0 1px 3px rgba(0,0,0,0.06);
+    --radius-lg:22px;
+    --radius-md:16px;
+    --radius-sm:10px;
+    --sidebar-bg:rgba(255,255,255,0.78);
+
+    --trap-bg:#fff4e5;      --trap-border:#ff9f0a; --trap-text:#93450a;
+    --know-bg:#e8f2ff;      --know-border:#0071e3; --know-text:#0b3d78;
+    --num-bg:#e8f8ee;       --num-border:#34c759;  --num-text:#146c34;
+    --final-bg:#fdecec;     --final-border:#ff3b30; --final-text:#7a1410;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#000000;
+      --bg-elevated:#1c1c1e;
+      --bg-inset:#161618;
+      --text:#f5f5f7;
+      --text-secondary:#98989d;
+      --border:rgba(255,255,255,0.1);
+      --shadow:0 1px 2px rgba(0,0,0,0.4), 0 10px 30px rgba(0,0,0,0.5);
+      --shadow-sm:0 1px 3px rgba(0,0,0,0.4);
+      --sidebar-bg:rgba(22,22,24,0.78);
+      --trap-bg:rgba(255,159,10,0.14);  --trap-text:#ffb340;
+      --know-bg:rgba(10,132,255,0.14);  --know-text:#6cb2ff;
+      --num-bg:rgba(52,199,89,0.14);    --num-text:#6cd97e;
+      --final-bg:rgba(255,69,58,0.14);  --final-border:#ff453a; --final-text:#ff8a80;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#000000;
+    --bg-elevated:#1c1c1e;
+    --bg-inset:#161618;
+    --text:#f5f5f7;
+    --text-secondary:#98989d;
+    --border:rgba(255,255,255,0.1);
+    --shadow:0 1px 2px rgba(0,0,0,0.4), 0 10px 30px rgba(0,0,0,0.5);
+    --shadow-sm:0 1px 3px rgba(0,0,0,0.4);
+    --sidebar-bg:rgba(22,22,24,0.78);
+    --trap-bg:rgba(255,159,10,0.14);  --trap-text:#ffb340;
+    --know-bg:rgba(10,132,255,0.14);  --know-text:#6cb2ff;
+    --num-bg:rgba(52,199,89,0.14);    --num-text:#6cd97e;
+    --final-bg:rgba(255,69,58,0.14);  --final-border:#ff453a; --final-text:#ff8a80;
+  }
+
+  *{ box-sizing:border-box; -webkit-font-smoothing:antialiased; }
+  html{ scroll-behavior:smooth; overflow-x:hidden; }
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;
+    line-height:1.5;
+    font-size:15.5px;
+    overflow-x:hidden;
+  }
+
+  /* ---------- layout ---------- */
+  .sidebar{
+    position:fixed; top:0; left:0; width:290px; height:100vh;
+    background:var(--sidebar-bg);
+    backdrop-filter:blur(20px) saturate(1.6);
+    -webkit-backdrop-filter:blur(20px) saturate(1.6);
+    border-right:1px solid var(--border);
+    display:flex; flex-direction:column;
+    z-index:100;
+    transition:transform .3s ease;
+  }
+  .sidebar-top{ padding:22px 20px 14px; }
+  .brand{ display:flex; align-items:center; gap:10px; margin-bottom:4px; }
+  .brand-icon{ font-size:22px; }
+  .brand h1{ font-size:17px; font-weight:700; margin:0; letter-spacing:-.01em; }
+  .brand-sub{ font-size:12px; color:var(--text-secondary); margin:2px 0 0 32px; }
+
+  .search-wrap{ padding:0 20px 14px; }
+  .search-wrap input{
+    width:100%; padding:9px 12px; border-radius:10px; border:1px solid var(--border);
+    background:var(--bg-inset); color:var(--text); font-size:13px; outline:none;
+    font-family:inherit;
+  }
+  .search-wrap input::placeholder{ color:var(--text-secondary); }
+  .search-wrap input:focus{ border-color:var(--accent); }
+
+  .sidebar-nav{ flex:1; overflow-y:auto; padding:4px 12px 20px; }
+  .nav-group{ margin-bottom:18px; }
+  .nav-chapter-title{
+    display:flex; align-items:baseline; gap:6px;
+    font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--accent-local, var(--accent)); padding:8px 10px 4px;
+  }
+  .nav-group[data-accent="1"]{ --accent-local:#0071e3; }
+  .nav-group[data-accent="2"]{ --accent-local:#af52de; }
+  .nav-group[data-accent="3"]{ --accent-local:#ff9500; }
+  .nav-group[data-accent="4"]{ --accent-local:#30b0c7; }
+  .nav-group[data-accent="5"]{ --accent-local:#5856d6; }
+  .nav-group[data-accent="6"]{ --accent-local:#ff2d55; }
+  .nav-group[data-accent="7"]{ --accent-local:#a2845e; }
+  .nav-group[data-accent="8"]{ --accent-local:#ff3b30; }
+  .nav-link{
+    display:block; padding:8px 10px; margin:1px 0; border-radius:9px;
+    color:var(--text); text-decoration:none; font-size:13.5px;
+    transition:background .15s ease;
+  }
+  .nav-link:hover{ background:var(--bg-inset); }
+  .nav-link.active{
+    background:var(--accent-local, var(--accent));
+    color:#fff; font-weight:600;
+  }
+  .nav-link.hidden{ display:none; }
+
+  .theme-toggle{
+    margin:10px 16px 18px; padding:10px 12px;
+    border:1px solid var(--border); border-radius:12px;
+    background:var(--bg-inset); color:var(--text);
+    font-size:13px; font-weight:600; cursor:pointer; text-align:left;
+    font-family:inherit;
+    display:flex; align-items:center; gap:8px;
+  }
+  .theme-toggle:hover{ background:var(--border); }
+
+  .sidebar-overlay{
+    display:none; position:fixed; inset:0; background:rgba(0,0,0,.35); z-index:90;
+  }
+  .menu-btn{
+    display:none; position:fixed; top:16px; left:16px; z-index:110;
+    width:40px; height:40px; border-radius:12px; border:1px solid var(--border);
+    background:var(--bg-elevated); color:var(--text); font-size:17px;
+    box-shadow:var(--shadow-sm); cursor:pointer;
+  }
+
+  .content{ margin-left:290px; padding:0 0 100px; }
+  .progress-bar{
+    position:fixed; top:0; left:290px; right:0; height:3px; z-index:120;
+    background:transparent;
+  }
+  .progress-fill{ height:100%; width:0%; background:var(--accent); transition:width .1s linear; }
+
+  /* ---------- hero ---------- */
+  .hero{ max-width:760px; margin:0 auto; padding:70px 32px 40px; text-align:center; }
+  .hero-badge{
+    display:inline-block; font-size:11px; font-weight:700; letter-spacing:.08em;
+    color:var(--accent); background:var(--know-bg); padding:6px 14px; border-radius:20px;
+    margin-bottom:18px; text-transform:uppercase;
+  }
+  .hero h1{ font-size:40px; font-weight:800; letter-spacing:-.02em; margin:0 0 10px; }
+  .hero-sub{ font-size:16px; color:var(--text-secondary); margin:0 0 28px; }
+  .hero-stats{ display:flex; justify-content:center; gap:36px; }
+  .stat{ display:flex; flex-direction:column; align-items:center; }
+  .stat b{ font-size:22px; font-weight:800; }
+  .stat span{ font-size:12px; color:var(--text-secondary); margin-top:2px; }
+
+  /* ---------- chapters ---------- */
+  .chapter{ max-width:760px; margin:0 auto; padding:20px 32px 10px; }
+  .chapter[data-accent="1"]{ --accent-local:#0071e3; }
+  .chapter[data-accent="2"]{ --accent-local:#af52de; }
+  .chapter[data-accent="3"]{ --accent-local:#ff9500; }
+  .chapter[data-accent="4"]{ --accent-local:#30b0c7; }
+  .chapter[data-accent="5"]{ --accent-local:#5856d6; }
+  .chapter[data-accent="6"]{ --accent-local:#ff2d55; }
+  .chapter[data-accent="7"]{ --accent-local:#a2845e; }
+  .chapter[data-accent="8"]{ --accent-local:#ff3b30; }
+  .chapter-divider{
+    display:flex; align-items:center; gap:14px; margin:50px 0 30px;
+  }
+  .chapter-divider .line{ flex:1; height:1px; background:var(--border); }
+  .chapter-label{
+    font-size:12px; font-weight:800; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--accent-local);
+  }
+  .chapter-title{ font-size:28px; font-weight:800; letter-spacing:-.015em; margin:0 0 8px; }
+  .chapter-desc{ color:var(--text-secondary); font-size:15px; margin:0 0 8px; max-width:600px; }
+
+  .topic{ margin:36px 0 0; scroll-margin-top:24px; }
+  .topic-header{ display:flex; align-items:center; gap:12px; margin-bottom:14px; }
+  .topic-index{
+    display:flex; align-items:center; justify-content:center;
+    width:34px; height:34px; border-radius:10px; flex:none;
+    background:var(--accent-local); color:#fff; font-weight:800; font-size:14px;
+  }
+  .topic-title{ font-size:20px; font-weight:750; margin:0; letter-spacing:-.01em; }
+
+  h4{ font-size:14.5px; font-weight:700; margin:22px 0 8px; color:var(--text); }
+  h4 .code{ font-weight:500; }
+  h5{
+    font-size:13.5px; font-weight:700; margin:16px 0 6px; color:var(--text-secondary);
+    padding-left:10px; border-left:3px solid var(--accent-local);
+  }
+  p{ margin:6px 0; color:var(--text); }
+  ul,ol{ margin:6px 0 10px; padding-left:22px; }
+  li{ margin:3px 0; }
+  b,strong{ color:var(--text); }
+  .code{ color:var(--text-secondary); font-size:12.5px; font-weight:500; }
+
+  /* ---------- cards ---------- */
+  .audio-card{
+    display:flex; align-items:center; gap:14px;
+    background:var(--bg-elevated); border:1px solid var(--border);
+    border-radius:var(--radius-md); padding:12px 16px; margin-bottom:18px;
+    box-shadow:var(--shadow-sm);
+  }
+  .audio-card .icon{
+    font-size:18px; width:36px; height:36px; border-radius:10px;
+    background:var(--accent-local); color:#fff;
+    display:flex; align-items:center; justify-content:center; flex:none;
+  }
+  .audio-card .meta{ display:flex; flex-direction:column; min-width:98px; flex:none; }
+  .audio-card .meta b{ font-size:12.5px; }
+  .audio-card .meta span{ font-size:10.5px; color:var(--text-secondary); }
+  .audio-card audio{ flex:1; width:100%; height:32px; min-width:0; accent-color:var(--accent-local); }
+
+  .table-wrap{ overflow-x:auto; margin:14px 0 18px; border-radius:var(--radius-sm); border:1px solid var(--border); }
+  table{ width:100%; border-collapse:collapse; font-size:13px; background:var(--bg-elevated); }
+  th,td{ padding:10px 14px; text-align:left; vertical-align:top; border-bottom:1px solid var(--border); }
+  th{
+    background:var(--bg-inset); font-size:10.5px; text-transform:uppercase; letter-spacing:.04em;
+    color:var(--text-secondary); font-weight:700; white-space:nowrap;
+  }
+  tr:last-child td{ border-bottom:none; }
+
+  .callout{
+    border-radius:var(--radius-md); padding:14px 16px; margin:12px 0;
+    font-size:13.5px; display:flex; gap:10px; align-items:flex-start;
+  }
+  .callout .ci{ font-size:16px; flex:none; line-height:1.3; }
+  .callout .cc{ flex:1; }
+  .callout ul{ margin:6px 0 0; padding-left:18px; }
+  .callout p{ margin:0; }
+  .trap{ background:var(--trap-bg); color:var(--trap-text); }
+  .trap b{ color:var(--trap-text); }
+  .know{ background:var(--know-bg); color:var(--know-text); }
+  .know b{ color:var(--know-text); }
+  .num{ background:var(--num-bg); color:var(--num-text); }
+  .num b{ color:var(--num-text); }
+
+  .final-traps{
+    background:var(--final-bg); border:1px solid var(--final-border);
+    border-radius:var(--radius-lg); padding:22px 24px; margin:20px 0 60px;
+  }
+  .final-traps .topic-index{ background:var(--final-border); }
+  .final-traps .topic-title{ color:var(--final-text); }
+  .final-traps li{ margin-bottom:8px; }
+  .final-traps b{ color:var(--final-text); }
+
+  .hero-cta{
+    display:inline-block; margin-top:28px; padding:13px 26px;
+    background:var(--accent); color:#fff; text-decoration:none;
+    border-radius:14px; font-size:14px; font-weight:700; box-shadow:var(--shadow-sm);
+  }
+  .hero-cta:hover{ filter:brightness(1.05); }
+  .practice-exam-link{
+    display:flex; align-items:center; justify-content:space-between; gap:8px;
+    margin:0 16px 16px; padding:12px 14px;
+    background:var(--accent); color:#fff; text-decoration:none;
+    border-radius:12px; font-size:13.5px; font-weight:700;
+  }
+  .practice-exam-link span{
+    background:rgba(255,255,255,0.25); padding:2px 8px; border-radius:20px; font-size:11px; font-weight:700;
+  }
+  .practice-exam-link:hover{ filter:brightness(1.05); }
+
+  footer.end{
+    max-width:760px; margin:0 auto; padding:10px 32px 60px;
+    text-align:center; color:var(--text-secondary); font-size:12.5px;
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width:900px){
+    .sidebar{ transform:translateX(-100%); }
+    .sidebar.open{ transform:translateX(0); box-shadow:var(--shadow); }
+    .sidebar.open + .sidebar-overlay{ display:block; }
+    .content{ margin-left:0; }
+    .progress-bar{ left:0; }
+    .menu-btn{ display:block; }
+    .hero{ padding-top:90px; }
+  }
+
+  @media (max-width:480px){
+    .menu-btn{ top:calc(16px + env(safe-area-inset-top,0px)); }
+    .sidebar-top{ padding-top:calc(22px + env(safe-area-inset-top,0px)); }
+    .hero{ padding:calc(84px + env(safe-area-inset-top,0px)) 18px 28px; }
+    .hero h1{ font-size:30px; }
+    .hero-sub{ font-size:14px; }
+    .hero-stats{ gap:20px; flex-wrap:wrap; row-gap:14px; }
+    .chapter{ padding:16px 18px 6px; }
+    .chapter-title{ font-size:22px; }
+    .chapter-desc{ font-size:13.5px; }
+    .topic{ margin-top:28px; }
+    .topic-title{ font-size:17.5px; }
+    .topic-index{ width:30px; height:30px; font-size:13px; }
+    h4{ font-size:14px; }
+    body{ font-size:14.5px; }
+    .audio-card{ padding:10px 12px; gap:10px; }
+    .audio-card .icon{ width:32px; height:32px; font-size:16px; }
+    .audio-card .meta{ min-width:0; }
+    .audio-card .meta b{ font-size:11.5px; }
+    th,td{ padding:8px 10px; }
+    .callout{ padding:12px 13px; font-size:13px; }
+    .final-traps{ padding:18px 16px; }
+    footer.end{ padding:10px 18px 60px; }
+  }
+
+  @media print{
+    .sidebar,.sidebar-overlay,.menu-btn,.progress-bar,.audio-card,.theme-toggle{ display:none !important; }
+    .content{ margin-left:0; }
+    .chapter{ page-break-before:always; }
+  }
+</style>
+</head>
+<body>
+
+<button class="menu-btn" id="menuBtn">&#9776;</button>
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-top">
+    <div class="brand"><span class="brand-icon">&#128214;</span><h1>Study Guide</h1></div>
+    <div class="brand-sub">P&amp;C Insurance Exam</div>
+  </div>
+  <div class="search-wrap"><input id="navFilter" type="text" placeholder="Search sections&hellip;"></div>
+  <nav class="sidebar-nav" id="sidebarNav">
+    <div class="nav-group" data-accent="1">
+      <div class="nav-chapter-title">Chapter 1</div>
+      <a class="nav-link" href="#ch1-1">I. Basic Insurance Concepts</a>
+      <a class="nav-link" href="#ch1-2">II. Insurance Contracts</a>
+      <a class="nav-link" href="#ch1-3">III. Trap Summary</a>
+    </div>
+    <div class="nav-group" data-accent="2">
+      <div class="nav-chapter-title">Chapter 2</div>
+      <a class="nav-link" href="#ch2-1">I. Independent Rating Organizations</a>
+      <a class="nav-link" href="#ch2-2">II. P&amp;C Terms &mdash; Coverage &amp; Loss</a>
+      <a class="nav-link" href="#ch2-3">III. P&amp;C Terms &mdash; Cancellation, Ratings &amp; Claims</a>
+      <a class="nav-link" href="#ch2-4">IV. Policy Structure &amp; Provisions</a>
+      <a class="nav-link" href="#ch2-5">V. Loss Valuation</a>
+      <a class="nav-link" href="#ch2-6">VI. Torts, Negligence, Liability &amp; No-Fault</a>
+      <a class="nav-link" href="#ch2-7">VII. Trap Summary</a>
+    </div>
+    <div class="nav-group" data-accent="3">
+      <div class="nav-chapter-title">Chapter 3</div>
+      <a class="nav-link" href="#ch3-1">I. Dwelling Policy Overview</a>
+      <a class="nav-link" href="#ch3-2">II. Coverage Forms &mdash; DP-1, DP-2, DP-3</a>
+      <a class="nav-link" href="#ch3-3">III. Property Coverages</a>
+      <a class="nav-link" href="#ch3-4">IV. Policy Conditions</a>
+      <a class="nav-link" href="#ch3-5">V. General Exclusions</a>
+      <a class="nav-link" href="#ch3-6">VI. Trap Summary</a>
+    </div>
+  </nav>
+  <button class="theme-toggle" id="themeToggle">&#127765; Theme: System</button>
+</aside>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<main class="content">
+
+  <header class="hero">
+    <div class="hero-badge">Property &amp; Casualty Insurance Exam</div>
+    <h1>Study Guide</h1>
+    <p class="hero-sub">Insurance Principles &middot; Policy Structure &middot; Torts &amp; Liability</p>
+    <div class="hero-stats">
+      <div class="stat"><b>3</b><span>Chapters</span></div>
+      <div class="stat"><b>16</b><span>Sections</span></div>
+      <div class="stat"><b>~0 min</b><span>Audio</span></div>
+    </div>
+  </header>
+
+  <!-- ============================================================ -->
+  <!-- CHAPTER 1 -->
+  <!-- ============================================================ -->
+  <section class="chapter" id="chapter-1" data-accent="1">
+    <div class="chapter-divider"><div class="line"></div></div>
+    <div class="chapter-label">Chapter 1</div>
+    <h2 class="chapter-title">Basic Insurance Concepts &amp; Contract Structure</h2>
+    <p class="chapter-desc">Core insurance principles, hazards and risk, the elements of an insurable risk, and the structure of a legally binding insurance contract.</p>
+
+    <section class="topic" id="ch1-1">
+      <div class="topic-header"><span class="topic-index">I</span><h3 class="topic-title">Basic Insurance Concepts</h3></div>
+      <div class="audio-card">
+        <span class="icon">&#127911;</span>
+        <div class="meta"><b>Listen</b><span>~0 min</span></div>
+        <audio controls preload="none" src="audio/part1.m4a"></audio>
+      </div>
+
+      <h4>1. Insurance</h4>
+      <ul>
+      <li>Transfers the <b>risk of loss</b> from an individual to an insurer</li>
+      <li>Based on the <b>principle of indemnity</b></li>
+      <li>Based on the <b>spreading of risk</b> (risk pooling) and the <b>law of large numbers</b></li>
+      </ul>
+
+      <h4>2. Hazards</h4>
+      <p>Hazards give rise to a <b>peril</b>. There are 3 kinds of hazards:</p>
+      <div class="table-wrap"><table>
+      <tr><th>Hazard</th><th>Meaning</th></tr>
+      <tr><td><b>Physical</b></td><td>A physical condition (e.g., faulty wiring, icy steps)</td></tr>
+      <tr><td><b>Moral</b></td><td>A tendency toward increased risk (dishonesty, intent to profit from a loss)</td></tr>
+      <tr><td><b>Morale</b></td><td>An indifference to loss (carelessness because insurance is in place)</td></tr>
+      </table></div>
+      <div class="callout trap"><span class="ci">&#9888;&#65039;</span><div class="cc"><b>Moral vs. morale</b> is one of the most commonly confused pairs on the exam: <b>moral</b> hazard = dishonesty/intent; <b>morale</b> hazard = carelessness/indifference. Neither is a physical condition &mdash; that's the third, separate category.</div></div>
+
+      <h4>3. Risk</h4>
+      <p><b>Risk</b> = uncertainty regarding financial loss.</p>
+      <h5>2 Types of Risk</h5>
+      <div class="table-wrap"><table>
+      <tr><th>Type</th><th>Insurable?</th></tr>
+      <tr><td><b>Pure</b></td><td>Insurable &mdash; involves a chance of loss <b>only</b> (no chance of gain)</td></tr>
+      <tr><td><b>Speculative</b></td><td><b>Not</b> insurable &mdash; involves a chance of <b>gain</b> (e.g., gambling, investing)</td></tr>
+      </table></div>
+      <h5>Methods of Handling Risk</h5>
+      <ul>
+      <li>Avoidance</li>
+      <li>Retention</li>
+      <li>Sharing</li>
+      <li>Reduction</li>
+      <li>Transfer</li>
+      </ul>
+
+      <h4>4. Elements of Insurable Risk</h4>
+      <p>All of the following elements apply to an insurable risk:</p>
+      <div class="table-wrap"><table>
+      <tr><th>Element</th><th>Meaning</th></tr>
+      <tr><td><b>Due to chance</b></td><td>Chance of loss beyond the insured's control</td></tr>
+      <tr><td><b>Definite and measurable</b></td><td>Loss must have a definite time, place, and amount</td></tr>
+      <tr><td><b>Predictable</b></td><td>Number of losses must be statistically predictable</td></tr>
+      <tr><td><b>Not catastrophic</b></td><td>There must be limits that the loss can't exceed</td></tr>
+      <tr><td><b>Large exposure</b></td><td>Insurer must be able to predict losses based on the law of large numbers</td></tr>
+      <tr><td><b>Randomly selected exposure</b></td><td>Insurer must have a fair proportion of both good and poor risks</td></tr>
+      </table></div>
+    </section>
+
+    <section class="topic" id="ch1-2">
+      <div class="topic-header"><span class="topic-index">II</span><h3 class="topic-title">Insurance Contracts</h3></div>
+      <div class="audio-card">
+        <span class="icon">&#127911;</span>
+        <div class="meta"><b>Listen</b><span>~0 min</span></div>
+        <audio controls preload="none" src="audio/part2.m4a"></audio>
+      </div>
+
+      <h4>1. Elements of a Legal Contract</h4>
+      <p>All of the following requirements apply:</p>
+      <div class="table-wrap"><table>
+      <tr><th>Element</th><th>Meaning</th></tr>
+      <tr><td><b>Agreement</b></td><td>Offer and acceptance</td></tr>
+      <tr><td><b>Consideration</b></td><td>Premiums and representations on the part of the insured; payment of claims on the part of the insurer</td></tr>
+      <tr><td><b>Competent parties</b></td><td>Of legal age, sound mental capacity, and not under the influence of drugs or alcohol</td></tr>
+      <tr><td><b>Legal purpose</b></td><td>Not against public policy</td></tr>
+      </table></div>
+
+      <h4>2. Contract Characteristics</h4>
+      <div class="table-wrap"><table>
+      <tr><th>Characteristic</th><th>Meaning</th></tr>
+      <tr><td><b>Adhesion</b></td><td>One party (the insurer) prepares the contract; the other party must accept it as is</td></tr>
+      <tr><td><b>Aleatory</b></td><td>Exchange of unequal amounts (a small premium for a potentially large claim payout)</td></tr>
+      <tr><td><b>Conditional</b></td><td>Certain conditions must be met</td></tr>
+      <tr><td><b>Personal</b></td><td>Between the policyowner and the insurance company</td></tr>
+      <tr><td><b>Unilateral</b></td><td>Only <b>one</b> of the parties to the contract is legally bound to do anything</td></tr>
+      </table></div>
+      <div class="callout trap"><span class="ci">&#9888;&#65039;</span><div class="cc"><b>Unilateral</b> means only the <b>insurer</b> is legally bound (to pay a covered claim) &mdash; the insured can stop paying premiums or walk away at any time without being sued for "breach of contract."</div></div>
+
+      <h4>3. Legal Interpretations</h4>
+      <ul>
+      <li><b>Ambiguities</b> in the contract are always resolved <b>in favor of the insured</b></li>
+      <li>The insured can <b>reasonably expect coverage</b> based on the agent's words and actions</li>
+      <li><b>Material misrepresentations</b> (if intentional), <b>breach of warranties, concealment, fraud</b> &mdash; all can void the contract</li>
+      </ul>
+      <div class="callout know"><span class="ci">&#128161;</span><div class="cc">Because the contract is one of <b>adhesion</b> (the insurer writes it), courts resolve ambiguous language <b>against the insurer</b> &mdash; i.e., in favor of the insured. This is the direct legal consequence of adhesion.</div></div>
+    </section>
+
+    <div class="final-traps topic" id="ch1-3">
+      <div class="topic-header"><span class="topic-index">III</span><h3 class="topic-title">Trap Summary</h3></div>
+      <div class="audio-card">
+        <span class="icon">&#127911;</span>
+        <div class="meta"><b>Listen</b><span>~0 min</span></div>
+        <audio controls preload="none" src="audio/part3.m4a"></audio>
+      </div>
+      <ul>
+      <li><b>Speculative risk is never insurable</b> &mdash; only <b>pure</b> risk (chance of loss only, no chance of gain) can be insured.</li>
+      <li><b>Moral</b> hazard = dishonesty/intent to profit from loss; <b>morale</b> hazard = carelessness/indifference; <b>physical</b> hazard = a physical condition. Three distinct categories, easy to mix up the first two.</li>
+      <li><b>Unilateral</b>: only the <b>insurer</b> is bound to perform (pay claims) &mdash; the insured isn't legally forced to keep paying premiums.</li>
+      <li><b>Adhesion</b> + ambiguous wording &rarr; always construed <b>in favor of the insured</b>, since the insurer wrote the contract.</li>
+      <li><b>Aleatory</b> = unequal exchange of value (small premium, potentially large claim) &mdash; don't confuse with "conditional."</li>
+      <li>6 elements of an insurable risk: <b>due to chance, definite/measurable, predictable, not catastrophic, large exposure, randomly selected exposure.</b></li>
+      <li>4 elements of a legal contract: <b>agreement, consideration, competent parties, legal purpose.</b></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- CHAPTER 2 -->
+  <!-- ============================================================ -->
+  <section class="chapter" id="chapter-2" data-accent="2">
+    <div class="chapter-divider"><div class="line"></div></div>
+    <div class="chapter-label">Chapter 2</div>
+    <h2 class="chapter-title">P&amp;C Terms, Policy Structure &amp; Torts</h2>
+    <p class="chapter-desc">Rating organizations, key property &amp; casualty terminology, policy components and provisions, loss valuation methods, and tort, negligence, and liability concepts.</p>
+
+    <section class="topic" id="ch2-1">
+      <div class="topic-header"><span class="topic-index">I</span><h3 class="topic-title">Independent Rating Organizations</h3></div>
+      <div class="audio-card">
+        <span class="icon">&#127911;</span>
+        <div class="meta"><b>Listen</b><span>~0 min</span></div>
+        <audio controls preload="none" src="audio/ch2_part1.m4a"></audio>
+      </div>
+
+      <h4>Insurance Services Office (ISO)</h4>
+      <ul>
+      <li>Creates forms for the standard market in accordance with state regulations</li>
+      <li>Insurers pay for access to forms</li>
+      </ul>
+
+      <h4>Association for Cooperative Research and Development (ACORD)</h4>
+      <ul>
+      <li>Publishes standardized forms for property and casualty insurers</li>
+      <li>Develops electronic standards</li>
+      </ul>
+      <div class="callout trap"><span class="ci">&#9888;&#65039;</span><div class="cc">Don't mix these up: <b>ISO</b> creates the actual coverage forms insurers use (paid access); <b>ACORD</b> publishes standardized forms/applications and builds electronic data standards for the industry.</div></div>
+    </section>
+
+    <section class="topic" id="ch2-2">
+      <div class="topic-header"><span class="topic-index">II</span><h3 class="topic-title">P&amp;C Terms &mdash; Coverage &amp; Loss Concepts</h3></div>
+      <div class="audio-card">
+        <span class="icon">&#127911;</span>
+        <div class="meta"><b>Listen</b><span>~0 min</span></div>
+        <audio controls preload="none" src="audio/ch2_part2.m4a"></audio>
+      </div>
+
+      <h4>1. Definitions</h4>
+      <ul>
+      <li><b>Property</b> &mdash; covers buildings, contents of a building, or both</li>
+      <li><b>Casualty</b> &mdash; covers compensation for harm or wrongdoing to others</li>
+      </ul>
+
+      <h4>2. Accident vs. Occurrence</h4>
+      <ul>
+      <li><b>Accident</b> &mdash; a sudden, unplanned, and unexpected event resulting in injury or damage</li>
+      <li><b>Occurrence</b> &mdash; includes losses caused by <b>continuous or repeated exposure</b> to conditions resulting in injury or property damage</li>
+      </ul>
+      <div class="callout trap"><span class="ci">&#9888;&#65039;</span><div class="cc">This is a key liability-policy distinction: an <b>accident</b> is a single sudden event; an <b>occurrence</b> also captures harm that builds up gradually over repeated exposure (e.g., ongoing pollution) &mdash; occurrence is the broader term.</div></div>
+
+      <h4>3. Loss</h4>
+      <p><b>Loss</b> = reduction, decrease, or disappearance of value of insured property, caused by a named peril.</p>
+      <ul>
+      <li><b>Direct loss</b> &mdash; physical damage to buildings and/or property</li>
+      <li><b>Indirect loss</b> (consequential loss) &mdash; loss resulting <i>from</i> a direct loss</li>
+      </ul>
+
+      <h4>4. Named and Open Peril</h4>
+      <ul>
+      <li><b>Named peril</b> &mdash; coverage for specific perils listed in a policy</li>
+      <li><b>Open peril</b> &mdash; coverage for any risk of loss not excluded in a policy</li>
+      </ul>
+    </section>
+
+    <section class="topic" id="ch2-3">
+      <div class="topic-header"><span class="topic-index">III</span><h3 class="topic-title">P&amp;C Terms &mdash; Cancellation, Ratings &amp; Claims</h3></div>
+      <div class="audio-card">
+        <span class="icon">&#127911;</span>
+        <div class="meta"><b>Listen</b><span>~0 min</span></div>
+        <audio controls preload="none" src="audio/ch2_part3.m4a"></audio>
+      </div>
+
+      <h4>1. Cancellation and Nonrenewal</h4>
+      <ul>
+      <li><b>Cancellation</b> &mdash; termination of an in-force policy <b>prior to</b> its expiration date</li>
+      <li><b>Nonrenewal</b> &mdash; termination of a policy <b>at</b> its expiration date</li>
+      </ul>
+      <h5>Types of Cancellation</h5>
+      <ul>
+      <li>Short rate</li>
+      <li>Flat rate</li>
+      <li>Pro rata</li>
+      </ul>
+
+      <h4>2. Ratings</h4>
+      <ul>
+      <li>Class rating</li>
+      <li>Judgement rating</li>
+      <li>Schedule rating</li>
+      <li>Experience rating</li>
+      <li>Retrospective rating</li>
+      <li>Merit rating</li>
+      </ul>
+
+      <h4>3. Claims</h4>
+      <ul>
+      <li><b>First party</b> &mdash; the insured's property or a person named in an insurance contract</li>
+      <li><b>Third party</b> &mdash; a person or persons not a party to the insurance contract</li>
+      <li><b>Subrogation</b> &mdash; the insurer's right to seek damages from a third party, <b>after</b> reimbursing the insured</li>
+      <li><b>Arbitration</b> &mdash; used when insurer and insured do not agree on how to settle a claim; sent to one or more arbitrators</li>
+      </ul>
+      <div class="callout know"><span class="ci">&#128161;</span><div class="cc">Order matters for <b>subrogation</b>: the insurer pays the insured <b>first</b>, then pursues the at-fault third party to recover what it paid.</div></div>
+
+      <h4>4. Insurable Interest</h4>
+      <ul>
+      <li>Must exist <b>at time of loss</b></li>
+      <li>No insurable interest results in a <b>voided contract</b></li>
+      </ul>
+    </section>
+
+    <section class="topic" id="ch2-4">
+      <div class="topic-header"><span class="topic-index">IV</span><h3 class="topic-title">Policy Structure &amp; Provisions</h3></div>
+      <div class="audio-card">
+        <span class="icon">&#127911;</span>
+        <div class="meta"><b>Listen</b><span>~0 min</span></div>
+        <audio controls preload="none" src="audio/ch2_part4.m4a"></audio>
+      </div>
+
+      <h4>1. Policy Components</h4>
+      <div class="table-wrap"><table>
+      <tr><th>Component</th><th>Purpose</th></tr>
+      <tr><td><b>Declarations</b></td><td>Basic underwriting information (e.g., name, address, coverage amount, etc.)</td></tr>
+      <tr><td><b>Definitions</b></td><td>Clarifies terms of the policy</td></tr>
+      <tr><td><b>Insuring agreement/clause</b></td><td>Establishes insured perils, parties to the contract, effective and renewal dates</td></tr>
+      <tr><td><b>Additional and supplementary coverage</b></td><td>Additional amount of coverage for specific loss expenses, with no additional premium</td></tr>
+      <tr><td><b>Conditions</b></td><td>General rules and procedures the insurer and insured must agree to follow</td></tr>
+      <tr><td><b>Exclusions</b></td><td>Details perils not insured against and persons not insured</td></tr>
+      <tr><td><b>Endorsements</b></td><td>An addendum which modifies the contract</td></tr>
+      </table></div>
+
+      <h4>2. Right to Cancel</h4>
+      <ul>
+      <li>The <b>insured</b> may cancel a policy at any time</li>
+      <li>Must provide notice of cancellation to the insurer</li>
+      <li>The <b>insurer</b> may cancel a policy by providing advance written notice to the insured:</li>
+      </ul>
+      <div class="table-wrap"><table>
+      <tr><th>Reason</th><th>Notice required</th></tr>
+      <tr><td>Nonpayment of premium, or policy in force less than 60 days</td><td>At least <b>10 days</b></td></tr>
+      <tr><td>All other reasons</td><td>At least <b>30 days</b></td></tr>
+      </table></div>
+      <div class="callout num"><span class="ci">&#128290;</span><div class="cc">Once a policy has been in place for <b>60 days or more</b>, the insurer may only cancel it due to <b>material misrepresentation</b> or a <b>substantial change in risk</b> &mdash; not for just any reason.</div></div>
+
+      <h4>3. Additional Provisions</h4>
+      <div class="table-wrap"><table>
+      <tr><th>Provision</th><th>Meaning</th></tr>
+      <tr><td><b>Assignment</b></td><td>Transfer of legal right or interest; requires written consent of the insurer</td></tr>
+      <tr><td><b>Supplementary payments</b></td><td>Additional payment amounts added to coverage limits</td></tr>
+      <tr><td><b>Severability</b></td><td>Coverage applies to each insured separately</td></tr>
+      <tr><td><b>Liberalization</b></td><td>Broader legislated or regulated coverage is extended to current policies at no additional premium</td></tr>
+      <tr><td><b>Coverage extensions</b></td><td>Coverage added for loss to property not otherwise insured</td></tr>
+      <tr><td><b>Mortgagee clause</b></td><td>Attached to a policy to protect the interest of the mortgagee of the mortgaged property</td></tr>
+      </table></div>
+    </section>
+
+    <section class="topic" id="ch2-5">
+      <div class="topic-header"><span class="topic-index">V</span><h3 class="topic-title">Loss Valuation</h3></div>
+      <div class="audio-card">
+        <span class="icon">&#127911;</span>
+        <div class="meta"><b>Listen</b><span>~0 min</span></div>
+        <audio controls preload="none" src="audio/ch2_part5.m4a"></audio>
+      </div>
+
+      <h4>Types of Loss Valuation</h4>
+      <div class="table-wrap"><table>
+      <tr><th>Type</th><th>Meaning</th></tr>
+      <tr><td><b>Actual cash value (ACV)</b></td><td>Replacement cost minus depreciation</td></tr>
+      <tr><td><b>Replacement cost</b></td><td>Cost to replace property with like kind and quality, without deducting for depreciation</td></tr>
+      <tr><td><b>Market value</b></td><td>The price a willing buyer would pay a willing seller</td></tr>
+      <tr><td><b>Agreed value</b></td><td>A value set by insurer and insured at policy inception, paid in full on a total loss</td></tr>
+      <tr><td><b>Stated value</b></td><td>A value declared by the insured &mdash; often a maximum payable amount, not a guaranteed payout</td></tr>
+      <tr><td><b>Salvage value</b></td><td>The value of damaged property after a loss, which the insurer may keep or sell to offset the claim payment</td></tr>
+      </table></div>
+    </section>
+
+    <section class="topic" id="ch2-6">
+      <div class="topic-header"><span class="topic-index">VI</span><h3 class="topic-title">Torts, Negligence, Liability &amp; No-Fault</h3></div>
+      <div class="audio-card">
+        <span class="icon">&#127911;</span>
+        <div class="meta"><b>Listen</b><span>~0 min</span></div>
+        <audio controls preload="none" src="audio/ch2_part6.m4a"></audio>
+      </div>
+
+      <h4>1. Intentional Torts</h4>
+      <p>A <b>deliberate act</b> that causes harm to another person.</p>
+      <ul>
+      <li><b>Libel</b> &mdash; written or printed untrue statements intended to injure a person's or company's reputation</li>
+      <li><b>Slander</b> &mdash; oral or verbal untrue statements intended to injure a person's or company's reputation</li>
+      <li><b>False arrest</b> &mdash; unjustified physical restraint</li>
+      </ul>
+
+      <h4>2. Negligence</h4>
+      <p><b>Negligence</b> = failure to use reasonable and prudent care.</p>
+      <h5>4 Elements of Negligence</h5>
+      <ul>
+      <li>Legal duty</li>
+      <li>Standard of care</li>
+      <li>Unbroken chain of events</li>
+      <li>Actual loss or damage</li>
+      </ul>
+      <ul>
+      <li><b>Gross negligence</b> &mdash; reckless behavior showing disregard for safety</li>
+      <li><b>Assumption of risk</b> &mdash; a defense against negligence if the person recognizes the danger and voluntarily chooses to encounter it</li>
+      <li><b>Comparative negligence</b> &mdash; the claim is not defeated; damages payable are mitigated</li>
+      <li><b>Contributory negligence</b> &mdash; negligence falls on the party contributing to the injury</li>
+      </ul>
+      <div class="callout trap"><span class="ci">&#9888;&#65039;</span><div class="cc"><b>Comparative</b> vs. <b>contributory</b> negligence are frequently swapped: comparative <b>reduces</b> the damages owed proportionally (the claim survives); contributory places the negligence on the party who contributed to their own injury.</div></div>
+
+      <h4>3. Liability</h4>
+      <ul>
+      <li><b>Absolute liability</b> &mdash; applies to harm or injury resulting from negligence or omission</li>
+      <li><b>Strict liability</b> &mdash; often applied to product liability cases</li>
+      <li><b>Vicarious liability</b> &mdash; liability imposed on one party as a result of another party's actions</li>
+      </ul>
+
+      <h4>4. Damages</h4>
+      <p>Comprised of bodily injury or property damage.</p>
+      <ul>
+      <li><b>Special damages</b> &mdash; out-of-pocket expenses for medical, miscellaneous expenses, or loss of wages</li>
+      <li><b>General damages</b> &mdash; compensate for pain and suffering, mental anguish, or disfigurement</li>
+      <li><b>Punitive damage</b> &mdash; punishment for extreme behavior, gross negligence, or willful intent</li>
+      </ul>
+      <div class="callout know"><span class="ci">&#128161;</span><div class="cc"><b>Punitive damages</b> aren't meant to compensate the victim &mdash; they're meant to <b>punish</b> the wrongdoer, which sets them apart from special and general damages.</div></div>
+
+      <h4>5. No-Fault Insurance</h4>
+      <ul>
+      <li>Insurance for automobile accidents</li>
+      <li>Payment of loss claims from the insured's own insurer</li>
+      <li>Protects the insured and passengers</li>
+      <li>Designed to reduce the judicial impact of lawsuits</li>
+      </ul>
+    </section>
+
+    <div class="final-traps topic" id="ch2-7">
+      <div class="topic-header"><span class="topic-index">VII</span><h3 class="topic-title">Trap Summary</h3></div>
+      <div class="audio-card">
+        <span class="icon">&#127911;</span>
+        <div class="meta"><b>Listen</b><span>~0 min</span></div>
+        <audio controls preload="none" src="audio/ch2_part7.m4a"></audio>
+      </div>
+      <ul>
+      <li><b>ISO</b> creates the standard coverage forms insurers pay to use; <b>ACORD</b> publishes standardized forms and develops electronic data standards &mdash; don't swap them.</li>
+      <li><b>Occurrence</b> is broader than <b>accident</b> &mdash; occurrence covers continuous/repeated exposure, not just a single sudden event.</li>
+      <li><b>Named peril</b> = only listed perils are covered; <b>open peril</b> = everything is covered except what's excluded.</li>
+      <li>Cancellation notice: <b>10 days</b> (nonpayment or &lt;60 days in force) vs. <b>30 days</b> (all other reasons); once 60+ days in force, cancellation is limited to material misrepresentation or a substantial change in risk.</li>
+      <li><b>Subrogation</b>: insurer reimburses the insured <b>first</b>, then pursues the responsible third party.</li>
+      <li>P&amp;C <b>insurable interest</b> must exist <b>at the time of loss</b> &mdash; no insurable interest voids the contract.</li>
+      <li><b>Comparative negligence</b> mitigates damages (claim survives); <b>contributory negligence</b> places the fault on the injured party.</li>
+      <li><b>Vicarious liability</b> = one party is held liable for another party's actions (e.g., an employer for an employee).</li>
+      <li><b>Punitive damages</b> punish; <b>special/general damages</b> compensate &mdash; keep the purpose straight.</li>
+      <li>6 types of loss valuation: <b>ACV, replacement cost, market value, agreed value, stated value, salvage value.</b></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- CHAPTER 3 -->
+  <!-- ============================================================ -->
+  <section class="chapter" id="chapter-3" data-accent="3">
+    <div class="chapter-divider"><div class="line"></div></div>
+    <div class="chapter-label">Chapter 3</div>
+    <h2 class="chapter-title">The Dwelling Property Policy</h2>
+    <p class="chapter-desc">The dwelling policy's purpose and eligibility rules, its coverage forms, Coverages A&ndash;E, policy conditions, and general exclusions.</p>
+
+    <section class="topic" id="ch3-1">
+      <div class="topic-header"><span class="topic-index">I</span><h3 class="topic-title">Dwelling Policy Overview</h3></div>
+      <div class="audio-card">
+        <span class="icon">&#127911;</span>
+        <div class="meta"><b>Listen</b><span>~0 min</span></div>
+        <audio controls preload="none" src="audio/ch3_part1.m4a"></audio>
+      </div>
+
+      <h4>1. Purpose and Eligibility</h4>
+      <p>The dwelling policy provides property coverage for a dwelling, its contents, or both. It's written <b>solely for properties used for residential purposes</b>:</p>
+      <ul>
+      <li>Owner-occupied, tenant-occupied, or both</li>
+      <li>Properties in the course of construction</li>
+      <li>Properties with up to <b>5 roomers or boarders</b></li>
+      <li>Properties with up to <b>4 residential units</b></li>
+      <li>Mobile homes (<b>Basic form only</b>) if they contain no more than one apartment</li>
+      <li>Seasonal dwellings unoccupied for <b>3 or more months</b> during a 12-month period</li>
+      <li>Properties <b>not</b> designed as farm properties</li>
+      </ul>
+      <div class="callout num"><span class="ci">&#128290;</span><div class="cc">Key eligibility numbers: up to <b>5</b> roomers/boarders, up to <b>4</b> residential units, and <b>3+ months</b> of seasonal vacancy is still eligible &mdash; don't confuse these with the policy's own vacancy exclusions.</div></div>
+
+      <h4>2. Form Structure</h4>
+      <p>Every dwelling policy form follows the same basic structure:</p>
+      <ul>
+      <li>Agreement</li>
+      <li>Definitions</li>
+      <li>Deductible</li>
+      <li>Coverages, including Other Coverages</li>
+      <li>Perils Insured Against</li>
+      <li>General Exclusions</li>
+      <li>Conditions</li>
+      </ul>
+    </section>
+
+    <section class="topic" id="ch3-2">
+      <div class="topic-header"><span class="topic-index">II</span><h3 class="topic-title">Coverage Forms &mdash; DP-1, DP-2, DP-3</h3></div>
+      <div class="audio-card">
+        <span class="icon">&#127911;</span>
+        <div class="meta"><b>Listen</b><span>~0 min</span></div>
+        <audio controls preload="none" src="audio/ch3_part2.m4a"></audio>
+      </div>
+
+      <div class="table-wrap"><table>
+      <tr><th>Form</th><th>Peril basis</th><th>Perils covered</th></tr>
+      <tr><td><b>Basic (DP-1)</b></td><td>Named peril</td><td>The basic named perils defined in the policy</td></tr>
+      <tr><td><b>Broad (DP-2)</b></td><td>Named peril</td><td>Basic perils + extended coverage perils + V&amp;MM (vandalism &amp; malicious mischief) + broad form perils</td></tr>
+      <tr><td><b>Special (DP-3)</b></td><td>Open peril</td><td>Basic perils + extended coverage perils + V&amp;MM, on an open-peril basis</td></tr>
+      </table></div>
+      <div class="callout trap"><span class="ci">&#9888;&#65039;</span><div class="cc">DP-1 and DP-2 are both <b>named-peril</b> forms &mdash; DP-2 just adds more named perils on top of DP-1's basic list. Only <b>DP-3 (Special)</b> flips to <b>open peril</b>, covering everything except what's specifically excluded.</div></div>
+    </section>
+
+    <section class="topic" id="ch3-3">
+      <div class="topic-header"><span class="topic-index">III</span><h3 class="topic-title">Property Coverages</h3></div>
+      <div class="audio-card">
+        <span class="icon">&#127911;</span>
+        <div class="meta"><b>Listen</b><span>~0 min</span></div>
+        <audio controls preload="none" src="audio/ch3_part3.m4a"></audio>
+      </div>
+
+      <div class="table-wrap"><table>
+      <tr><th>Coverage</th><th>What it covers</th></tr>
+      <tr><td><b>A &mdash; Dwelling</b></td><td>The dwelling and premises; must be used principally for dwelling or residential purposes</td></tr>
+      <tr><td><b>B &mdash; Other Structures</b></td><td>Separate structures at the same location, such as detached garages and other outbuildings</td></tr>
+      <tr><td><b>C &mdash; Personal Property</b></td><td>Can be purchased to cover personal property usual to a residence</td></tr>
+      <tr><td><b>D &mdash; Fair Rental Value</b></td><td>Applies if property under Coverage A, B, or C becomes damaged or destroyed</td></tr>
+      <tr><td><b>E &mdash; Additional Living Expenses</b></td><td>Only available if <b>broad or special form</b> dwelling coverage is written</td></tr>
+      </table></div>
+      <div class="callout trap"><span class="ci">&#9888;&#65039;</span><div class="cc">Coverage E is <b>not</b> available on the Basic (DP-1) form &mdash; it only becomes available once the insured steps up to Broad (DP-2) or Special (DP-3).</div></div>
+    </section>
+
+    <section class="topic" id="ch3-4">
+      <div class="topic-header"><span class="topic-index">IV</span><h3 class="topic-title">Policy Conditions</h3></div>
+      <div class="audio-card">
+        <span class="icon">&#127911;</span>
+        <div class="meta"><b>Listen</b><span>~0 min</span></div>
+        <audio controls preload="none" src="audio/ch3_part4.m4a"></audio>
+      </div>
+
+      <p>The dwelling policy's conditions section sets the ground rules for how coverage operates and how claims are handled:</p>
+      <div class="table-wrap"><table>
+      <tr><th>Condition</th><th>What it generally covers</th></tr>
+      <tr><td><b>Policy period</b></td><td>Coverage applies only to loss occurring during the policy period</td></tr>
+      <tr><td><b>Insurable interest and limit of insurance</b></td><td>Insurer's liability is limited to the insured's actual interest, and never exceeds the policy's limit of insurance</td></tr>
+      <tr><td><b>Concealment or fraud</b></td><td>The entire policy is void if the insured has concealed or misrepresented a material fact, or committed fraud</td></tr>
+      <tr><td><b>Duties after a loss</b></td><td>The insured must give prompt notice, protect the property from further damage, and submit a proof of loss</td></tr>
+      <tr><td><b>Loss settlement</b></td><td>Describes how the amount payable for a covered loss is calculated (e.g., ACV or replacement cost)</td></tr>
+      <tr><td><b>Pair or sets</b></td><td>For loss to part of a pair or set, the insurer may repair/replace the damaged part or pay the difference in value &mdash; not the full value of the set</td></tr>
+      <tr><td><b>Appraisal</b></td><td>If insurer and insured disagree on the value of a loss, either may demand an appraisal</td></tr>
+      <tr><td><b>Other insurance</b></td><td>Describes how the policy responds if other insurance also covers the same loss</td></tr>
+      <tr><td><b>Subrogation</b></td><td>The insurer may require the insured to assign their right to recover from a responsible third party</td></tr>
+      <tr><td><b>Suit against the insurer</b></td><td>No suit may be brought unless policy requirements are met, and only within the time limit the policy specifies</td></tr>
+      <tr><td><b>Insurer's option to repair or replace</b></td><td>The insurer may choose to repair, rebuild, or replace damaged property instead of paying cash</td></tr>
+      <tr><td><b>Loss payment</b></td><td>Sets out how and when a covered loss is paid to the named insured</td></tr>
+      <tr><td><b>Abandonment</b></td><td>There can be <b>no</b> abandonment of damaged property to the insurer</td></tr>
+      <tr><td><b>Mortgage holders</b></td><td>Protects a mortgagee's interest even if the insured's own claim is denied, as long as the mortgagee meets certain conditions</td></tr>
+      <tr><td><b>No benefit to bailee</b></td><td>No one holding the insured's property for a fee (a bailee) may benefit from this insurance</td></tr>
+      <tr><td><b>Cancellation and nonrenewal</b></td><td>Sets the notice periods and requirements for cancelling or nonrenewing the policy</td></tr>
+      <tr><td><b>Liberalization</b></td><td>If the insurer broadens this form without an added premium, the broader coverage automatically applies to existing policies</td></tr>
+      <tr><td><b>Assignment</b></td><td>The policy may not be assigned to someone else without the insurer's written consent</td></tr>
+      <tr><td><b>Death</b></td><td>Coverage continues for the named insured's legal representative if the named insured dies</td></tr>
+      <tr><td><b>Nuclear hazard</b></td><td>Clarifies how loss involving a nuclear hazard is treated under the policy</td></tr>
+      <tr><td><b>Recovered property</b></td><td>If lost property is later recovered, both parties must notify each other, and the insured may keep it by returning the loss payment</td></tr>
+      <tr><td><b>Volcanic eruption</b></td><td>Multiple volcanic eruptions within a 72-hour period are treated as a single occurrence</td></tr>
+      <tr><td><b>Loss payable clause</b></td><td>Similar to the mortgage holders condition, but protects a loss payee (e.g., a lienholder) with no ownership interest</td></tr>
+      </table></div>
+    </section>
+
+    <section class="topic" id="ch3-5">
+      <div class="topic-header"><span class="topic-index">V</span><h3 class="topic-title">General Exclusions</h3></div>
+      <div class="audio-card">
+        <span class="icon">&#127911;</span>
+        <div class="meta"><b>Listen</b><span>~0 min</span></div>
+        <audio controls preload="none" src="audio/ch3_part5.m4a"></audio>
+      </div>
+
+      <div class="table-wrap"><table>
+      <tr><th>Exclusion</th><th>What it generally excludes</th></tr>
+      <tr><td><b>Ordinance or law</b></td><td>Increased costs from enforcing a building code or ordinance</td></tr>
+      <tr><td><b>Earth movement</b></td><td>Earthquake, landslide, mudslide, sinkhole, and similar earth movement</td></tr>
+      <tr><td><b>Water damage</b></td><td>Flood, surface water, and water that backs up through sewers or drains</td></tr>
+      <tr><td><b>Power failure</b></td><td>Loss from a power interruption that occurs away from the insured premises</td></tr>
+      <tr><td><b>Neglect</b></td><td>Loss from the insured's failure to use reasonable means to protect property at or after a loss</td></tr>
+      <tr><td><b>War</b></td><td>War, undeclared war, civil war, insurrection, rebellion, and revolution</td></tr>
+      <tr><td><b>Nuclear hazard</b></td><td>Loss from nuclear reaction, radiation, or contamination</td></tr>
+      <tr><td><b>Intentional loss</b></td><td>Loss arising from an act committed by or at the direction of an insured with intent to cause a loss</td></tr>
+      <tr><td><b>Government action</b></td><td>Destruction, confiscation, or seizure of property by order of governmental authority</td></tr>
+      </table></div>
+      <div class="callout know"><span class="ci">&#128161;</span><div class="cc">Notice <b>nuclear hazard</b> appears as both a <b>condition</b> (clarifying how such a loss is handled) and a <b>general exclusion</b> (ruling out coverage for it) &mdash; that's intentional, not a duplicate error in the policy.</div></div>
+    </section>
+
+    <div class="final-traps topic" id="ch3-6">
+      <div class="topic-header"><span class="topic-index">VI</span><h3 class="topic-title">Trap Summary</h3></div>
+      <div class="audio-card">
+        <span class="icon">&#127911;</span>
+        <div class="meta"><b>Listen</b><span>~0 min</span></div>
+        <audio controls preload="none" src="audio/ch3_part6.m4a"></audio>
+      </div>
+      <ul>
+      <li>Eligibility numbers: up to <b>5</b> roomers/boarders, up to <b>4</b> residential units, mobile homes eligible for <b>Basic form only</b> (no more than one apartment), seasonal dwellings okay even if vacant <b>3+ months</b> a year.</li>
+      <li><b>DP-1 (Basic)</b> and <b>DP-2 (Broad)</b> are both <b>named-peril</b>; only <b>DP-3 (Special)</b> is <b>open-peril</b>.</li>
+      <li>Coverage <b>E (Additional Living Expenses)</b> is only available on <b>Broad or Special</b> form &mdash; never on Basic.</li>
+      <li>Coverage <b>D (Fair Rental Value)</b> applies when Coverage A, B, or C property is damaged/destroyed &mdash; don't confuse with Coverage E, which covers the insured's own added living costs.</li>
+      <li><b>Abandonment</b> is never allowed &mdash; the insured cannot simply hand over damaged property and demand full value.</li>
+      <li><b>Pair or sets</b>: insurer pays the difference in value or repairs/replaces the damaged part &mdash; not the full set's value.</li>
+      <li><b>Nuclear hazard</b> shows up as both a condition and a general exclusion &mdash; that's correct, not a contradiction.</li>
+      <li>The <b>government action</b> exclusion generally has the same carve-out as other property forms: destruction ordered specifically to stop a fire from spreading is typically still covered.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="end">
+    More chapters will be added to this same file as you cover them &mdash; the sidebar will grow to match.
+  </footer>
+
+</main>
+
+<script>
+(function(){
+  // ---- theme toggle (system / light / dark) ----
+  var root = document.documentElement;
+  var btn = document.getElementById('themeToggle');
+  var states = ['system','light','dark'];
+  var labels = {system:'&#127765; Theme: System', light:'&#9728;&#65039; Theme: Light', dark:'&#127769; Theme: Dark'};
+  var current = 'system';
+  try { current = localStorage.getItem('sg-theme') || 'system'; } catch(e){}
+  function apply(state){
+    if(state==='system'){ root.removeAttribute('data-theme'); }
+    else { root.setAttribute('data-theme', state); }
+    btn.innerHTML = labels[state];
+  }
+  apply(current);
+  btn.addEventListener('click', function(){
+    var idx = (states.indexOf(current)+1) % states.length;
+    current = states[idx];
+    try { localStorage.setItem('sg-theme', current); } catch(e){}
+    apply(current);
+  });
+
+  // ---- mobile sidebar ----
+  var sidebar = document.getElementById('sidebar');
+  var overlay = document.getElementById('sidebarOverlay');
+  var menuBtn = document.getElementById('menuBtn');
+  function closeSidebar(){ sidebar.classList.remove('open'); overlay.style.display='none'; }
+  function openSidebar(){ sidebar.classList.add('open'); overlay.style.display='block'; }
+  menuBtn.addEventListener('click', function(){
+    sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+  });
+  overlay.addEventListener('click', closeSidebar);
+  document.querySelectorAll('.nav-link').forEach(function(a){
+    a.addEventListener('click', function(){ if(window.innerWidth<=900) closeSidebar(); });
+  });
+
+  // ---- nav filter ----
+  var filterInput = document.getElementById('navFilter');
+  filterInput.addEventListener('input', function(){
+    var q = filterInput.value.trim().toLowerCase();
+    document.querySelectorAll('.nav-link').forEach(function(a){
+      var match = a.textContent.toLowerCase().indexOf(q) !== -1;
+      a.classList.toggle('hidden', q.length>0 && !match);
+    });
+  });
+
+  // ---- scrollspy ----
+  var links = Array.prototype.slice.call(document.querySelectorAll('.nav-link'));
+  var sections = links.map(function(a){ return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      var id = '#' + entry.target.id;
+      var link = links.find(function(a){ return a.getAttribute('href') === id; });
+      if(!link) return;
+      if(entry.isIntersecting){
+        links.forEach(function(a){ a.classList.remove('active'); });
+        link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+  sections.forEach(function(s){ io.observe(s); });
+
+  // ---- scroll progress ----
+  var fill = document.getElementById('progressFill');
+  function updateProgress(){
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = h>0 ? (window.scrollY/h)*100 : 0;
+    fill.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive:true });
+  updateProgress();
+})();
+</script>
+
+</body>
+</html>
